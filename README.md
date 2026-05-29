@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 基于 PLIF 脉冲神经网络的事件相机手势识别
 
 > 机器视觉课程作业「视觉算法应用」。用事件相机数据集 **DVS128 Gesture**，设计并训练一个
@@ -106,3 +107,6 @@ python event_snn/analyze.py --data-root <数据根目录> --ckpt ./checkpoints/b
 ```
 
 > 数据集（2.8GB）与训练模型权重不纳入仓库，下载方式见 `event_snn/README.md`。
+=======
+# event-camera-snn-gesture
+>>>>>>> 9ea85c7ceff42f2fce07e125dae554ecbd18d92a
