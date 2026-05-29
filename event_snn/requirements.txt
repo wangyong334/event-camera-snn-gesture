@@ -1,0 +1,8 @@
+# 注意：PyTorch 不要写在这里直接 pip install！
+# RTX 5060 是 Blackwell(50系)显卡，必须装 CUDA 12.8 版的 PyTorch，
+# 请按 README.md 里的命令单独安装 torch / torchvision，再装下面这些。
+
+spikingjelly>=0.0.0.0.14
+numpy
+matplotlib
+tqdm

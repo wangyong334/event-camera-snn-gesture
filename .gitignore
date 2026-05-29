@@ -1,0 +1,17 @@
+# 数据集 (2.8GB+, 不上传; 通过 README 说明如何下载)
+data/
+
+# 训练产生的模型权重 (体积大, 不入库)
+checkpoints/
+*.pth
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+
+# 编辑器/系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
