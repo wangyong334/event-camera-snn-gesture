@@ -1,23 +1,26 @@
 """
-train.py — 训练脚本 (替代梯度 + 时空反向传播 BPTT)
+train.py 
 
-================== 训练流程在讲什么 ==================
-SNN 的训练本质是“按时间展开的反向传播”，叫做 BPTT
-(Backpropagation Through Time, 时空反向传播)：
+================== 任务 ==================
+— 训练脚本 (替代梯度 + 时空反向传播 BPTT)
+
+================== 训练流程 ==================
+SNN 的训练本质是“按时间展开的反向传播”，BPTT(Backpropagation Through Time, 时空反向传播)：
   - 前向：输入 [T,N,...] 沿 T 步推进，神经元逐步积分、发放，得到各步脉冲。
   - 反向：把 T 步看成一个“展开的计算图”，梯度沿时间和层两个方向回传；
           遇到不可导的发放函数时，用替代梯度 (surrogate gradient) 近似。
-PyTorch 的 autograd + SpikingJelly 的替代梯度神经元会自动完成这一切，
-我们只需照常 loss.backward()。
 
-两个 SNN 专属的“坑”，代码里都标了出来：
+PyTorch 的 autograd + SpikingJelly 的替代梯度神经元会自动完成这一切，只需照常 loss.backward()。
+
+两个 SNN 专属的“坑”，代码中已标注：
   (1) 每个 batch 训练完，必须 reset_net() 复位所有神经元膜电位，
       否则上一批样本的状态会泄漏到下一批。
   (2) DataLoader 给的形状是 [N, T, ...]，要 transpose 成 [T, N, ...] 再喂网络。
 
-运行示例 (Windows PowerShell)：
+运行命令 (Windows PowerShell)：
     python train.py --data-root D:\datasets\DVS128Gesture --amp
-显存只有 8GB 时建议加 --amp (混合精度，省显存)；若仍 OOM，把 --batch-size 调到 4。
+注意事项：
+    显存只有 8GB 时建议加 --amp (混合精度，省显存)；若仍 OOM，把 --batch-size 调到 4。
 """
 
 import argparse

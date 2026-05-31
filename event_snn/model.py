@@ -1,5 +1,8 @@
 """
-model.py — 基于 PLIF 神经元的脉冲卷积网络 (PLIF Spiking CNN)
+model.py 
+================== 任务 ==================
+搭建基于 PLIF 神经元的脉冲卷积网络 (PLIF Spiking CNN)
+
 
 ================== 核心知识点 ==================
 
@@ -8,10 +11,10 @@ model.py — 基于 PLIF 神经元的脉冲卷积网络 (PLIF Spiking CNN)
    每个时间步累积输入电流，当 V 超过阈值就“发放 (fire)”一个脉冲 (输出 1)，
    然后膜电位复位 (reset)。本项目用 LIF 家族里的 PLIF。
 
-2) LIF vs PLIF —— 这是我们的“创新点 1”
+2) LIF vs PLIF —— 是“创新点 1”
    - LIF (Leaky Integrate-and-Fire): 膜电位会按固定的“时间常数 tau”泄漏。
    - PLIF (Parametric LIF): 把 tau 变成“可学习参数”，让网络自己学“记忆该衰减多快”。
-     不同层可以学到不同的 tau —— 报告里画出各层学到的 tau，就是一个直观的创新点。
+     不同层可以学到不同的 tau 
 
 3) 替代梯度 (surrogate gradient)
    “是否发放脉冲”是一个阶跃函数 (0/1)，它的导数几乎处处为 0，没法直接反向传播。
@@ -41,7 +44,7 @@ class PLIFSpikingCNN(nn.Module):
         super().__init__()
         self.T = T
 
-        # ---- 一个“造 PLIF 神经元”的小工厂，避免重复写参数 ----
+        # ----工厂模式： 一个“造 PLIF 神经元”的工厂，避免重复写参数 ----
         def plif():
             return neuron.ParametricLIFNode(
                 init_tau=init_tau,                    # tau 的初始值
@@ -50,7 +53,7 @@ class PLIFSpikingCNN(nn.Module):
             )
 
         # ---- 特征提取：5 个脉冲卷积块 ----
-        # 注意这里用的都是 spikingjelly.activation_based.layer 里的层，
+        # 这里用的都是 spikingjelly.activation_based.layer 里的层，
         # 它们支持多步模式 (能正确处理 [T, N, ...] 形状)。
         # 卷积用 bias=False，因为后面紧跟 BatchNorm，bias 是多余的。
         self.conv = nn.Sequential(
